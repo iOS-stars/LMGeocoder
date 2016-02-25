@@ -51,7 +51,11 @@ typedef void (^LMGeocodeCallback) (NSArray *results, NSError *error);
  * To set google service preferred language
  */
 @property (nonatomic, strong) NSString *preferredLanguage;
-
+/*!
+ * To set the timeout interval of the service.
+ * If this is not set, the kDefaultTimeoutInterval will be used
+ */
+@property (nonatomic, strong) NSNumber *timeoutInterval;
 /*!
  *  Get shared instance.
  */

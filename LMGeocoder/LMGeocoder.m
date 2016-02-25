@@ -9,7 +9,7 @@
 #import "LMGeocoder.h"
 #import "LMAddress.h"
 
-#define kTimeoutInterval                            60
+#define kDefaultTimeoutInterval                     60
 #define kLMGeocoderErrorDomain                      @"LMGeocoderError"
 #define kGoogleAPIReverseGeocodingURL(lat, lng)     [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=true", lat, lng];
 #define kGoogleAPIGeocodingURL(address)             [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", address];
@@ -222,7 +222,11 @@
     NSURL *requestURL = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:requestURL];
-    [request setTimeoutInterval:kTimeoutInterval];
+    if (self.timeoutInterval) {
+        [request setTimeoutInterval:[self.timeoutInterval doubleValue]];
+    } else {
+        [request setTimeoutInterval:kDefaultTimeoutInterval];
+    }
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
