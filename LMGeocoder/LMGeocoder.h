@@ -48,6 +48,11 @@ typedef void (^LMGeocodeCallback) (NSArray *results, NSError *error);
 @property (nonatomic, strong) NSString *googleAPIKey;
 
 /*!
+ * To set google service preferred language
+ */
+@property (nonatomic, strong) NSString *preferredLanguage;
+
+/*!
  *  Get shared instance.
  */
 + (LMGeocoder *)sharedInstance;

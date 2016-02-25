@@ -9,11 +9,12 @@
 #import "LMGeocoder.h"
 #import "LMAddress.h"
 
-#define kTimeoutInterval                        60
-#define kLMGeocoderErrorDomain                  @"LMGeocoderError"
-#define kGoogleAPIReverseGeocodingURL(lat, lng) [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=true", lat, lng];
-#define kGoogleAPIGeocodingURL(address)         [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", address];
-#define kGoogleAPIURLWithKey(url, key)          [NSString stringWithFormat:@"%@&key=%@", url, key];
+#define kTimeoutInterval                            60
+#define kLMGeocoderErrorDomain                      @"LMGeocoderError"
+#define kGoogleAPIReverseGeocodingURL(lat, lng)     [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=true", lat, lng];
+#define kGoogleAPIGeocodingURL(address)             [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", address];
+#define kGoogleAPIURLWithKey(url, key)              [NSString stringWithFormat:@"%@&key=%@", url, key];
+#define kGoogleAPIURLWithLanguage(url, language)    [NSString stringWithFormat:@"%@&language=%@", url, language];
 
 @interface LMGeocoder ()
 
@@ -97,6 +98,10 @@
                 if (self.googleAPIKey != nil) {
                     urlString = kGoogleAPIURLWithKey(urlString, self.googleAPIKey)
                 }
+                if (self.preferredLanguage != nil) {
+                    urlString = kGoogleAPIURLWithLanguage(urlString, self.preferredLanguage)
+                }
+                
                 [self buildConnectionFromURLString:urlString];
                 break;
             }
@@ -163,7 +168,10 @@
                 if (self.googleAPIKey != nil) {
                     urlString = kGoogleAPIURLWithKey(urlString, self.googleAPIKey)
                 }
-
+                if (self.preferredLanguage != nil) {
+                    urlString = kGoogleAPIURLWithLanguage(urlString, self.preferredLanguage)
+                }
+                
                 [self buildConnectionFromURLString:urlString];
                 break;
             }
